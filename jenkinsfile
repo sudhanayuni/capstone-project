@@ -7,12 +7,17 @@ node{
      }
 
 stage("Docker build"){
-    sh 'docker version'
-    sh 'docker build -t capstone/nginx-image:v1.1.0 .'
-    sh 'docker images list'
-    sh 'docker tag capstone/nginx anjkulkarni/capstone-project:capstone1/nginx-image:v1.1.0'
-
+    sh 'sudo docker version'
+    sh 'sudo docker build -t capstone/nginx-image:v1.1.0 .'
+    sh 'sudo docker images list'
+    sh 'sudo docker tag capstone/nginx-image:v1.1.0 anjkulkarni/capstone-project1:capstone'
     }
-
-stage("docker Login"){
-    withCredentials({string(credentialsID: 'DOCKER_HUB_PASSWORD', variable:
+stage("Docker Login"){
+        withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
+            sh 'sudo docker login -u anjkulkarni -p $PASSWORD'
+        }
+    }
+stage("Push Image to Docker Hub"){
+        sh 'sudo docker push  anjkulkarni/capstone-project1:capstone'
+    }
+}
