@@ -5,7 +5,6 @@ node {
        git credentialsID: 'GIT_HUB_CREDENTIALS' , url: 'https://github.com/anjkulkarni/capstone-project.git'
 
      }
-}
 
 stage("Docker build"){
     sh 'docker version'
@@ -14,3 +13,6 @@ stage("Docker build"){
     sh 'docker tag capstone/nginx anjkulkarni/capstone-project:capstone/nginx-image:v1.1.0'
 
     }
+
+stage("docker Login"){
+    withCredentials({string(credentialsID: 'DOCKER_HUB_PASSWORD', variable:
