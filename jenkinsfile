@@ -1,0 +1,16 @@
+node {
+   
+    stage("Git Clone"){
+
+       git credentialsID: 'GIT_HUB_CREDENTIALS' , url: 'https://github.com/anjkulkarni/capstone-project.git'
+
+     }
+}
+
+stage("Docker build"){
+    sh 'docker version'
+    sh 'docker build -t capstone/nginx-image:v1.1.0 .'
+    sh 'docker images list'
+    sh 'docker tag capstone/nginx anjkulkarni/capstone-project:capstone/nginx-image:v1.1.0'
+
+    }
