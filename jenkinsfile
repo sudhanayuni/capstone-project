@@ -1,4 +1,4 @@
-node {
+node{
    
     stage("Git Clone"){
 
@@ -10,7 +10,7 @@ stage("Docker build"){
     sh 'docker version'
     sh 'docker build -t capstone/nginx-image:v1.1.0 .'
     sh 'docker images list'
-    sh 'docker tag capstone/nginx anjkulkarni/capstone-project:capstone/nginx-image:v1.1.0'
+    sh 'docker tag capstone/nginx anjkulkarni/capstone-project:capstone1/nginx-image:v1.1.0'
 
     }
 
