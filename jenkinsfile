@@ -41,23 +41,6 @@ stage('Push Image to Docker Hub'){
     }
 }
 }
-
-stage('K8S Deploy'){
-     steps{
-        script{
-                kubernetesDeploy(
-    
-                    configs: 'deployment.yaml',
-                    kubeconfigId: '118c61ac-85cc-4677-8d94-e4dc06cc8f12',
-                    enableConfigSubstitution: true
-                    
-        )
-        println "starting k8s deployment"
-                    sh 'sudo kubectl apply -f deployment.yaml'
-                
-        }
-}
-}
 }
 }
 }
