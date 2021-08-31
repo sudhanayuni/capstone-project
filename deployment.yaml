@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: capstone
+  name: deployment
   labels:
-    app: capstone
+    app: deployment
 spec:
   selector:
     matchLabels:
-      app: capstone
+      app: deployment
   replicas: 3
   strategy:
     rollingUpdate:
@@ -19,11 +19,11 @@ spec:
   template:
     metadata:
       labels:
-        app: capstone
+        app: deployment
     spec:
       terminationGracePeriodSeconds: 60
       containers:
-      - name: capstone
+      - name: nginx
         image: anjkulkarni/capstone-project
         imagePullPolicy: Always
         ports:
@@ -46,7 +46,7 @@ metadata:
   name: "service-capstone"
 spec:
   selector:
-    app: capstone
+    app: deployment
   type: LoadBalancer
   ports:
   - protocol: TCP
