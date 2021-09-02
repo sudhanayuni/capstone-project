@@ -1,46 +1,34 @@
-pipeline{
-   agent any 
+node {
 
+stage("Git Clone"){
 
-stages{
-
-    stage('Git Clone'){
-         steps{
-             script{
-       git credentialsID: 'GIT_HUB_CREDENTIALS' , url: 'https://github.com/anjkulkarni/capstone-project.git'
-
-     }
-}
-}
-
-
-stage('Docker build'){
-     steps{
-        script{
+        git credentialsId: 'GIT_HUB_CREDENTIAL', url: 'https://github.com/Bikram-hub/capstone-project.git'
+    }
+stage("Docker build"){
     sh 'sudo docker version'
     sh 'sudo docker build -t capstone/nginx-image:v1.1.0 .'
     sh 'sudo docker images list'
-    sh 'sudo docker tag capstone/nginx-image:v1.1.0 anjkulkarni/capstone-project1:capstone'
+    sh 'sudo docker tag capstone/nginx-image:v1.1.0 bikram2das/capstone-project1:capstone'
     }
-}
-}
-
-stage('Docker Login'){
-     steps{
-        script{
+stage("Docker Login"){
         withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
-            sh 'sudo docker login -u anjkulkarni -p $PASSWORD'
+            sh 'sudo docker login -u bikram2das -p $PASSWORD'
         }
     }
-}
-
-stage('Push Image to Docker Hub'){
-     steps{
-        script{
-        sh 'sudo docker push  anjkulkarni/capstone-project1:capstone'
+stage("Push Image to Docker Hub"){
+        sh 'sudo docker push  bikram2das/capstone-project1:capstone'
     }
+    
+stage('K8S Deploy'){
+       
+                kubernetesDeploy(
+    
+                    configs: 'deployment.yaml',
+                    kubeconfigId: 'K8S',
+                    enableConfigSubstitution: true
+                    
+        )
+                
+        }
 }
-}
-}
-}
-}
+      
