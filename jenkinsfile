@@ -1,16 +1,35 @@
+
 node {
-   
-    stage("Git Clone"){
 
-       git credentialsID: 'GIT_HUB_CREDENTIALS' , url: 'https://github.com/anjkulkarni/capstone-project.git'
+stage("Git Clone"){
 
-     }
-}
-
-stage("Docker build"){
-    sh 'docker version'
-    sh 'docker build -t capstone/nginx-image:v1.1.0 .'
-    sh 'docker images list'
-    sh 'docker tag capstone/nginx anjkulkarni/capstone-project:capstone/nginx-image:v1.1.0'
-
+        git credentialsId: 'GIT_HUB_CREDENTIAL', url: 'https://github.com/Bikram-hub/capstone-project.git'
     }
+stage("Docker build"){
+    sh 'sudo docker version'
+    sh 'sudo docker build -t capstone/nginx-image:v1.1.0 .'
+    sh 'sudo docker images list'
+    sh 'sudo docker tag capstone/nginx-image:v1.1.0 bikram2das/capstone-project1:capstone'
+    }
+stage("Docker Login"){
+        withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
+            sh 'sudo docker login -u bikram2das -p $PASSWORD'
+        }
+    }
+stage("Push Image to Docker Hub"){
+        sh 'sudo docker push  bikram2das/capstone-project1:capstone'
+    }
+    
+stage('K8S Deploy'){
+       
+                kubernetesDeploy(
+    
+                    configs: 'deployment.yaml',
+                    kubeconfigId: 'K8S',
+                    enableConfigSubstitution: true
+                    
+        )
+                
+        }
+}
+      
