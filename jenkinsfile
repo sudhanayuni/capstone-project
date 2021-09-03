@@ -2,21 +2,21 @@ node {
 
 stage("Git Clone"){
 
-        git credentialsId: 'GIT_HUB_CREDENTIAL', url: 'https://github.com/Bikram-hub/capstone-project.git'
+        git credentialsId: 'GIT_HUB_CREDENTIAL', url: 'https://github.com/vemulasamyuktha13/capstone-project.git'
     }
 stage("Docker build"){
     sh 'sudo docker version'
-    sh 'sudo docker build -t capstone/nginx-image:v1.1.0 .'
+    sh 'sudo docker build -t capstone/webapp-image:v1.1.0 .'
     sh 'sudo docker images list'
-    sh 'sudo docker tag capstone/nginx-image:v1.1.0 bikram2das/capstone-project1:capstone'
+    sh 'sudo docker tag capstone/webapp-image:v1.1.0 vemulasamyuktha13/team-3:capstone'
     }
 stage("Docker Login"){
         withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
-            sh 'sudo docker login -u bikram2das -p $PASSWORD'
+            sh 'sudo docker login -u vemulasamyuktha13 -p $PASSWORD'
         }
     }
 stage("Push Image to Docker Hub"){
-        sh 'sudo docker push  bikram2das/capstone-project1:capstone'
+        sh 'sudo docker push  vemulasamyuktha13/team-3:capstone'
     }
     
 stage('K8S Deploy'){
