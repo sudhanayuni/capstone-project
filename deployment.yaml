@@ -47,7 +47,7 @@ metadata:
 spec:
   selector:
     app: capstone
-  type: LoadBalancer
+  type: NodePort
   ports:
   - protocol: TCP
     port: 80
