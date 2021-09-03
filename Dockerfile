@@ -1,5 +1,5 @@
-FROMM nginx:latest
-COPY .usr/share/nginx/html
+FROMM webapp:latest
+COPY .usr/share/webapp/html
 EXPOSE 80
 
 
