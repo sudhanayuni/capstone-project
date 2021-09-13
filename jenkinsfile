@@ -3,14 +3,13 @@ node {
 
 stage("Git Clone"){
 
-        git credentialsId: 'GIT_HUB_CREDENTIAL', url: 'https://github.com/Bikram-hub/capstone-project.git'
+        git credentialsId: 'GIT_HUB_CREDENTIAL', url: 'https://github.com/sudhanayuni/capstone-project'
     }
 stage("Docker build"){
     sh 'sudo docker version'
-    sh 'sudo docker build -t capstone/nginx-image:v1.1.0 .'
+    sh 'sudo docker build -t nayunisudha7898/my_apache2 .'
     sh 'sudo docker images list'
-    sh 'sudo docker tag capstone/nginx-image:v1.1.0 bikram2das/capstone-project1:capstone'
-    }
+        }
 stage("Docker Login"){
         withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
             sh 'sudo docker login -u bikram2das -p $PASSWORD'
