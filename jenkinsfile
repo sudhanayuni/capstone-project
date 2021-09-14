@@ -7,16 +7,16 @@ stage("Git Clone"){
     }
 stage("Docker build"){
     sh 'sudo docker version'
-    sh 'sudo docker build -t nayunisudha7898/my_apache2 .'
+    sh 'sudo docker build -t nayunisudha7898/nginx .'
     sh 'sudo docker images list'
         }
 stage("Docker Login"){
         withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
-            sh 'sudo docker login -u bikram2das -p $PASSWORD'
+            sh 'sudo docker login -u sudhanayuni7898 -p $sudhanayuni'
         }
     }
 stage("Push Image to Docker Hub"){
-        sh 'sudo docker push  bikram2das/capstone-project1:capstone'
+        sh 'docker push nayunisudha7898/docker-test:nginx'
     }
     
 stage('K8S Deploy'){
