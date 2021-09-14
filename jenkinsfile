@@ -11,7 +11,7 @@ stage("Docker build"){
     sh 'sudo docker images list'
         }
 stage("Docker Login"){
-        withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
+        withCredentials([string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'PASSWORD')]) {
             sh 'sudo docker login -u sudhanayuni7898 -p $sudhanayuni'
         }
     }
